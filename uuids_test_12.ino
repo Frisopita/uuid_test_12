@@ -44,18 +44,18 @@ bool deviceConnected = false;
 bool oldDeviceConnected = false;
 uint32_t value = 0;
 
-int S1 = 70;
-int S2 = 25;
-int S3 = 70;
+int S1 = 120;
+int S2 = 100;
+int S3 = 40;
 int S4 = 25;
-int S5 = 70;
-int S6 = 25;
-int S7 = 70;
-int S8 = 25;
-int S9 = 70;
-int S10 = 25;
-int S11 = 70;
-int S12 = 25;
+int S5 = 35;
+int S6 = 10;
+int S7 = 7;
+int S8 = 15;
+int S9 = 50;
+int S10 = 65;
+int S11 = 75;
+int S12 = 85;
 
 static BLERemoteCharacteristic* pRemoteCharacteristicRea;
 
@@ -127,29 +127,29 @@ void loop() {
       
       delay(2000);
 
-      Serial.print("S1: ");
+      Serial.print("S1:");
       Serial.print(S1);
-      Serial.print(" S2: ");
+      Serial.print(" S2:");
       Serial.print(S2);
-      Serial.print("S3: ");
+      Serial.print(" S3:");
       Serial.print(S3);
-      Serial.print(" S4: ");
+      Serial.print(" S4:");
       Serial.print(S4);
-      Serial.print("S5: ");
+      Serial.print(" S5:");
       Serial.print(S5);
-      Serial.print(" S6: ");
+      Serial.print(" S6:");
       Serial.print(S6);
-      Serial.print("S7: ");
+      Serial.print(" S7:");
       Serial.print(S7);
-      Serial.print(" S8: ");
+      Serial.print(" S8:");
       Serial.print(S8);
-      Serial.print("S9: ");
+      Serial.print(" S9:");
       Serial.print(S9);
       Serial.print(" S10: ");
       Serial.print(S10);
-      Serial.print("S11: ");
+      Serial.print(" S11:");
       Serial.print(S11);
-      Serial.print(" S12: ");
+      Serial.print(" S12:");
       Serial.print(S12);
       Serial.print('\n');
   
