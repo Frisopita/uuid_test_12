@@ -7,7 +7,12 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 #include <BLE2902.h>
-#include <DHT.h>//https://github.com/adafruit/DHT-sensor-library
+#include <Thread.h>
+#include <ThreadController.h>
+
+ThreadController controll = ThreadController();
+
+Thread* btThread = new Thread();
 
 #define SERVICE_UUID        "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define CHARACTERISTIC_S1_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
@@ -23,10 +28,6 @@
 #define CHARACTERISTIC_S11_UUID "3c21b038-85a3-4c47-aa78-446f301dd61c"
 #define CHARACTERISTIC_S12_UUID "1b0724f2-156b-41a6-8bb6-22be491731fc"
 
-#define DHTPIN 2 
-#define DHTTYPE DHT11   // DHT 11
-
-
 BLEServer* pServer = NULL;
 BLECharacteristic* pCharacteristicS1 = NULL;
 BLECharacteristic* pCharacteristicS2 = NULL;
@@ -40,6 +41,7 @@ BLECharacteristic* pCharacteristicS9 = NULL;
 BLECharacteristic* pCharacteristicS10 = NULL;
 BLECharacteristic* pCharacteristicS11 = NULL;
 BLECharacteristic* pCharacteristicS12 = NULL;
+
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
 uint32_t value = 0;
@@ -56,13 +58,6 @@ int S9 = 50;
 int S10 = 65;
 int S11 = 75;
 int S12 = 85;
-
-static BLERemoteCharacteristic* pRemoteCharacteristicRea;
-
-
-DHT dht(DHTPIN, DHTTYPE);
-
-
 
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
@@ -94,21 +89,8 @@ class MyCallbacks: public BLECharacteristicCallbacks{
   }
 };
 
-
-
-// Thread  
-#include <Thread.h>
-#include <ThreadController.h>
-
-// ThreadController that will controll all threads
-ThreadController controll = ThreadController();
-
-Thread* btThread = new Thread();
-
-
 void setup() {
   Serial.begin(115200);
-  dht.begin();
   initBT();
   
   btThread->onRun(btCallback);
@@ -257,7 +239,7 @@ void initBT(){
   pServer->setCallbacks(new MyServerCallbacks());
 
   // Create the BLE Service
-  BLEService *pService = pServer->createService(SERVICE_UUID);
+  BLEService *pService = pServer->createService(BLEUUID(SERVICE_UUID), 50, 0);
 
   // Create a BLE Characteristic
   pCharacteristicS1 = pService->createCharacteristic(
