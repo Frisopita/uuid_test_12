@@ -27,6 +27,7 @@ Thread* btThread = new Thread();
 #define CHARACTERISTIC_S10_UUID "a8f2dbc3-c562-42d9-a094-33e4cca73118"
 #define CHARACTERISTIC_S11_UUID "3c21b038-85a3-4c47-aa78-446f301dd61c"
 #define CHARACTERISTIC_S12_UUID "1b0724f2-156b-41a6-8bb6-22be491731fc"
+#define CHARACTERISTIC_S13_UUID "6743b155-5778-4756-b31f-34e9e8e53a9d"
 
 BLEServer* pServer = NULL;
 BLECharacteristic* pCharacteristicS1 = NULL;
@@ -41,6 +42,7 @@ BLECharacteristic* pCharacteristicS9 = NULL;
 BLECharacteristic* pCharacteristicS10 = NULL;
 BLECharacteristic* pCharacteristicS11 = NULL;
 BLECharacteristic* pCharacteristicS12 = NULL;
+BLECharacteristic* pCharacteristicS13 = NULL;
 
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
@@ -58,6 +60,7 @@ int S9 = 50;
 int S10 = 65;
 int S11 = 75;
 int S12 = 85;
+int S13 = 85;
 
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
@@ -133,6 +136,8 @@ void loop() {
       Serial.print(S11);
       Serial.print(" S12:");
       Serial.print(S12);
+      Serial.print(" S13:");
+      Serial.print(S13);
       Serial.print('\n');
   
 }
@@ -165,6 +170,8 @@ void btCallback(){
       strS11 += S11;
       String strS12 = "";
       strS12 += S12;
+      String strS13 = "";
+      strS12 += S13;
       
       Serial.print(strS1);
       Serial.print(strS2);
@@ -178,6 +185,7 @@ void btCallback(){
       Serial.print(strS10);
       Serial.print(strS11);
       Serial.print(strS12);
+      Serial.print(strS13);
       
       pCharacteristicS1->setValue((char*)strS1.c_str());
       pCharacteristicS1->notify();
@@ -214,6 +222,9 @@ void btCallback(){
 
       pCharacteristicS12->setValue((char*)strS12.c_str());
       pCharacteristicS12->notify();
+
+      pCharacteristicS13->setValue((char*)strS13.c_str());
+      pCharacteristicS13->notify();
     }
     // disconnecting
     if (!deviceConnected && oldDeviceConnected) {
@@ -338,6 +349,14 @@ void initBT(){
                       BLECharacteristic::PROPERTY_INDICATE
                     );
   
+  pCharacteristicS13 = pService->createCharacteristic(
+                      CHARACTERISTIC_S13_UUID,
+                      BLECharacteristic::PROPERTY_READ   |
+                      BLECharacteristic::PROPERTY_WRITE  |
+                      BLECharacteristic::PROPERTY_NOTIFY |
+                      BLECharacteristic::PROPERTY_INDICATE
+                    );
+  
   pCharacteristicS1->setCallbacks(new MyCallbacks());
   pCharacteristicS2->setCallbacks(new MyCallbacks());
   pCharacteristicS3->setCallbacks(new MyCallbacks());
@@ -350,6 +369,7 @@ void initBT(){
   pCharacteristicS10->setCallbacks(new MyCallbacks());
   pCharacteristicS11->setCallbacks(new MyCallbacks());
   pCharacteristicS12->setCallbacks(new MyCallbacks());
+  pCharacteristicS13->setCallbacks(new MyCallbacks());
   // https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.descriptor.gatt.client_characteristic_configuration.xml
   // Create a BLE Descriptorn
   pCharacteristicS1->addDescriptor(new BLE2902());
@@ -364,6 +384,7 @@ void initBT(){
   pCharacteristicS10->addDescriptor(new BLE2902());
   pCharacteristicS11->addDescriptor(new BLE2902());
   pCharacteristicS12->addDescriptor(new BLE2902());
+  pCharacteristicS13->addDescriptor(new BLE2902());
   // Start the service
   pService->start();
 
