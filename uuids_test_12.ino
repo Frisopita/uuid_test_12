@@ -60,7 +60,7 @@ int S9 = 50;
 int S10 = 65;
 int S11 = 75;
 int S12 = 85;
-int S13 = 85;
+int S13 = 0;
 
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) {
@@ -222,9 +222,10 @@ void btCallback(){
 
       pCharacteristicS12->setValue((char*)strS12.c_str());
       pCharacteristicS12->notify();
-
+    
       pCharacteristicS13->setValue((char*)strS13.c_str());
       pCharacteristicS13->notify();
+
     }
     // disconnecting
     if (!deviceConnected && oldDeviceConnected) {
