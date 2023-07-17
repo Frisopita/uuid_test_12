@@ -48,7 +48,7 @@ bool deviceConnected = false;
 bool oldDeviceConnected = false;
 uint32_t value = 0;
 
-int S1 = 120;
+int S1 = 12;
 int S2 = 100;
 int S3 = 40;
 int S4 = 25;
@@ -59,7 +59,8 @@ int S8 = 15;
 int S9 = 50;
 int S10 = 65;
 int S11 = 75;
-int S12 = 85;
+int S12 = 55;
+
 int S13 = 0;
 
 class MyServerCallbacks: public BLEServerCallbacks {
@@ -105,12 +106,23 @@ void setup() {
 void loop() {
 // put your main code here, to run repeatedly: 
   controll.run();
-
+      /*
      //Aumentar los valores de los sensores
-     // S1 = S1+1;
-     // S2 = S2+1;
+     S1 = S1+1;
+     S2 = S2+1;
+     S3 = S3+1;
+     S4 = S4+1;
+     S5 = S5+1;
+     S6 = S6+1;
+     S7 = S7+1;
+     S8 = S8+1;
+     S9 = S8+1;
+     S10 = S10+1;
+     S11 = S11+1;
+     S12 = S12+1;
+     */
       
-      delay(2000);
+      delay(1200000);//120 segundos, 2 minutos
 
       Serial.print("S1:");
       Serial.print(S1);
